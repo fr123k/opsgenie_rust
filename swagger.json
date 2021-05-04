@@ -1,0 +1,2848 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Opsgenie REST API",
+    "description": "Opsgenie OpenAPI Specification",
+    "version": "2.0.0"
+  },
+  "host": "api.opsgenie.com",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "GenieKey": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "GenieKey": []
+    }
+  ],
+  "paths": {
+    "/v2/schedules": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "List Schedules",
+        "description": "Returns list of schedule",
+        "operationId": "listSchedules",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-list-schedules"
+        },
+        "parameters": [
+          {
+            "name": "expand",
+            "in": "query",
+            "description": "Returns more detailed response with expanding it. Possible value is 'rotation' which is also returned with expandable field of response",
+            "required": false,
+            "collectionFormat": "csv",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of schedule informations",
+            "schema": {
+              "$ref": "#/definitions/ListSchedulesResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Create Schedule",
+        "description": "Creates a new schedule",
+        "operationId": "createSchedule",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-create-schedule"
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of created schedule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSchedulePayload"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Schedule meta information for created schedule",
+            "schema": {
+              "$ref": "#/definitions/CreateScheduleResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Get Schedule",
+        "description": "Returns schedule with given id or name",
+        "operationId": "getSchedule",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-get-schedule"
+        },
+        "x-collapse-params": "GetScheduleRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule information for given identifier",
+            "schema": {
+              "$ref": "#/definitions/GetScheduleResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Update Schedule (Partial)",
+        "description": "Update schedule with given id or name",
+        "operationId": "updateSchedule",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-update-schedule-partial"
+        },
+        "x-collapse-params": "UpdateScheduleRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of update schedule action",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UpdateSchedulePayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule information for given identifier",
+            "schema": {
+              "$ref": "#/definitions/UpdateScheduleResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Delete Schedule",
+        "description": "Delete schedule with given identifier",
+        "operationId": "deleteSchedule",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-delete-schedule"
+        },
+        "x-collapse-params": "DeleteScheduleRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Ok"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}/timeline": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Get Schedule Timeline",
+        "description": "Returns schedule timeline with given id or name",
+        "operationId": "getScheduleTimeline",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-get-schedule-timeline"
+        },
+        "x-collapse-params": "GetScheduleTimelineRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType"
+          },
+          {
+            "name": "expand",
+            "in": "query",
+            "description": "Returns more detailed response with expanding it. Possible values are 'base', 'forwarding', and 'override' which is also returned with expandable field of response",
+            "required": false,
+            "collectionFormat": "csv",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "Length of time as integer in intervalUnits to retrieve the timeline. Default value is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "name": "intervalUnit",
+            "in": "query",
+            "description": "Unit of the time to retrieve the timeline. Available values are 'days', 'weeks' and 'months'. Default value is 'weeks'",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "days",
+              "weeks",
+              "months"
+            ]
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Time to return future date on-call participants. Default date is the moment of the time that request is received",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule timeline information for given schedule identifier",
+            "schema": {
+              "$ref": "#/definitions/GetScheduleTimelineResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}.ics": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Export Schedule",
+        "description": "Returns an .ics file as byte array",
+        "operationId": "exportSchedule",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-api#section-export-schedule"
+        },
+        "x-collapse-params": "ExportScheduleRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType"
+          }
+        ],
+        "produces": [
+          "text/calendar"
+        ],
+        "responses": {
+          "200": {
+            "description": "ICS file with exported schedule information for given identifier",
+            "schema": {
+              "type": "string",
+              "format": "byte"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}/rotations": {
+      "post": {
+        "tags": [
+          "schedule-rotation"
+        ],
+        "summary": "Create Schedule Rotation",
+        "description": "Creates a new schedule rotation",
+        "operationId": "createScheduleRotation",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-rotation-api#section-create-schedule-rotation"
+        },
+        "x-collapse-params": "CreateScheduleRotationRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of created schedule rotation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateScheduleRotationPayload"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Schedule rotation meta information for created rotation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "schedule-rotation"
+        ],
+        "summary": "List Schedule Rotations",
+        "description": "Returns list of schedule rotations",
+        "operationId": "listScheduleRotations",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-rotation-api#section-list-schedule-rotations"
+        },
+        "x-collapse-params": "ListScheduleRotationsRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of schedule rotation informations",
+            "schema": {
+              "$ref": "#/definitions/ListScheduleRotationsResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}/rotations/{id}": {
+      "get": {
+        "tags": [
+          "schedule-rotation"
+        ],
+        "summary": "Get Schedule Rotation",
+        "description": "Returns schedule rotation with given id",
+        "operationId": "getScheduleRotation",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-rotation-api#section-get-schedule-rotation"
+        },
+        "x-collapse-params": "GetScheduleRotationRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "$ref": "#/parameters/ScheduleRotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule rotation information for given identifier",
+            "schema": {
+              "$ref": "#/definitions/GetScheduleRotationResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "schedule-rotation"
+        ],
+        "summary": "Update Schedule Rotation (Partial)",
+        "description": "Update schedule rotation with given id",
+        "operationId": "updateScheduleRotation",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-rotation-api#section-update-schedule-rotation-partial"
+        },
+        "x-collapse-params": "UpdateScheduleRotationRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "$ref": "#/parameters/ScheduleRotationId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of update schedule rotation action",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateScheduleRotationPayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule rotation information for given identifier",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "schedule-rotation"
+        ],
+        "summary": "Delete Schedule Rotation",
+        "description": "Delete schedule rotation with given identifier",
+        "operationId": "deleteScheduleRotation",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-rotation-api#section-delete-schedule-rotation"
+        },
+        "x-collapse-params": "DeleteScheduleRotationRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "$ref": "#/parameters/ScheduleRotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Ok"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}/overrides": {
+      "post": {
+        "tags": [
+          "schedule-override"
+        ],
+        "summary": "Create Schedule Override",
+        "description": "Creates a schedule override for the specified user and schedule",
+        "operationId": "createScheduleOverride",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-override-api#section-create-schedule-override"
+        },
+        "x-collapse-params": "CreateScheduleOverrideRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of created schedule override",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateScheduleOverridePayload"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Schedule override information for created schedule override",
+            "schema": {
+              "$ref": "#/definitions/CreateScheduleOverrideResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "schedule-override"
+        ],
+        "summary": "List Schedule Overrides",
+        "description": "Returns list of schedule overrides",
+        "operationId": "listScheduleOverride",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-override-api#section-list-schedule-overrides"
+        },
+        "x-collapse-params": "ListScheduleOverridesRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of schedule override informations",
+            "schema": {
+              "$ref": "#/definitions/ListScheduleOverrideResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    },
+    "/v2/schedules/{identifier}/overrides/{alias}": {
+      "get": {
+        "tags": [
+          "schedule-override"
+        ],
+        "summary": "Get Schedule Override",
+        "description": "Gets schedule override details with given alias",
+        "operationId": "getScheduleOverride",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-override-api#section-get-schedule-override"
+        },
+        "x-collapse-params": "GetScheduleOverrideRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleOverrideAlias"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule override information for given identifier",
+            "schema": {
+              "$ref": "#/definitions/GetScheduleOverrideResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "schedule-override"
+        ],
+        "summary": "Update Schedule Override",
+        "description": "Update schedule override with given alias",
+        "operationId": "updateScheduleOverride",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-override-api#section-update-schedule-override"
+        },
+        "x-collapse-params": "UpdateScheduleOverrideRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleOverrideAlias"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Request payload of update schedule override",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateScheduleOverridePayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule override information for updated schedule override",
+            "schema": {
+              "$ref": "#/definitions/UpdateScheduleOverrideResponse"
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Id of given request",
+                "type": "string"
+              },
+              "X-Response-Time": {
+                "description": "Process time of given request",
+                "type": "string"
+              },
+              "X-RateLimit-State": {
+                "description": "Status of rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Reason": {
+                "description": "Source of the rate limit",
+                "type": "string"
+              },
+              "X-RateLimit-Period-In-Sec": {
+                "description": "Time of throttle in seconds",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "schedule-override"
+        ],
+        "summary": "Delete Schedule Override",
+        "description": "Delete schedule override with given alias",
+        "operationId": "deleteScheduleOverride",
+        "externalDocs": {
+          "description": "For more information",
+          "url": "https://www.opsgenie.com/docs/schedule-override-api#section-delete-schedule-override"
+        },
+        "x-collapse-params": "DeleteScheduleOverrideRequest",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleIdentifier"
+          },
+          {
+            "$ref": "#/parameters/ScheduleOverrideAlias"
+          },
+          {
+            "$ref": "#/parameters/ScheduleIdentifierType2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Ok"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/responses/TooManyRequest"
+          },
+          "default": {
+            "$ref": "#/responses/GeneralError"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "OrderParam": {
+      "name": "order",
+      "in": "query",
+      "description": "Sorting order of the result set",
+      "required": false,
+      "type": "string",
+      "enum": [
+        "asc",
+        "desc"
+      ],
+      "default": "desc"
+    },
+    "ScheduleIdentifier": {
+      "name": "identifier",
+      "in": "path",
+      "description": "Identifier of schedule which could be id or name",
+      "required": true,
+      "type": "string"
+    },
+    "ScheduleIdentifierType": {
+      "name": "identifierType",
+      "in": "query",
+      "description": "Type of the identifier that is provided as an in-line parameter. Possible values are 'id' or 'name'",
+      "required": false,
+      "type": "string",
+      "enum": [
+        "id",
+        "name"
+      ],
+      "default": "id"
+    },
+    "ScheduleIdentifierType2": {
+      "name": "scheduleIdentifierType",
+      "in": "query",
+      "description": "Type of the identifier that is provided as an in-line parameter. Possible values are 'id' or 'name'",
+      "required": false,
+      "type": "string",
+      "enum": [
+        "id",
+        "name"
+      ],
+      "default": "id"
+    },
+    "ScheduleRotationId": {
+      "name": "id",
+      "in": "path",
+      "description": "Identifier of schedule rotation",
+      "required": true,
+      "type": "string"
+    },
+    "ScheduleOverrideAlias": {
+      "name": "alias",
+      "in": "path",
+      "description": "Alias of the schedule override",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "responses": {
+    "Ok": {
+      "description": "Returns request id for this async operation.",
+      "schema": {
+        "$ref": "#/definitions/SuccessResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        },
+        "X-RateLimit-State": {
+          "description": "Status of rate limit",
+          "type": "string"
+        },
+        "X-RateLimit-Reason": {
+          "description": "Source of the rate limit",
+          "type": "string"
+        },
+        "X-RateLimit-Period-In-Sec": {
+          "description": "Time of throttle in seconds",
+          "type": "string"
+        }
+      }
+    },
+    "Accepted": {
+      "description": "Returns request id for this async operation.",
+      "schema": {
+        "$ref": "#/definitions/SuccessResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        },
+        "X-RateLimit-State": {
+          "description": "Status of rate limit",
+          "type": "string"
+        },
+        "X-RateLimit-Reason": {
+          "description": "Source of the rate limit",
+          "type": "string"
+        },
+        "X-RateLimit-Period-In-Sec": {
+          "description": "Time of throttle in seconds",
+          "type": "string"
+        }
+      }
+    },
+    "GeneralError": {
+      "description": "Unexpected error",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      }
+    },
+    "BadRequest": {
+      "description": "Invalid JSON body",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "Unauthorized": {
+      "description": "apiKey is invalid or integration is disabled",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "PaymentRequired": {
+      "description": "apiKey is valid but the account cannot do this action because of subscription plan",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "Forbidden": {
+      "description": "apiKey is valid but the apiKey cannot do this operation because of permissions",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "NotFound": {
+      "description": "Entity cannot be found for the given identifier",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "UnprocessableEntity": {
+      "description": "Semantic errors in request body",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    },
+    "TooManyRequest": {
+      "description": "Throttling",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      },
+      "headers": {
+        "X-Request-ID": {
+          "description": "Id of given request",
+          "type": "string"
+        },
+        "X-Response-Time": {
+          "description": "Process time of given request",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BaseResponse": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "required": [
+        "requestId",
+        "took"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "took": {
+          "type": "number",
+          "format": "float",
+          "default": 0
+        }
+      }
+    },
+    "BaseResponseWithExpandable": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "required": [
+        "expandable"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "expandable": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ErrorResponse": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "code": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "responseHeaders": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SuccessResponse": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "result": {
+              "type": "string"
+            },
+            "data": {
+              "$ref": "#/definitions/SuccessData"
+            }
+          }
+        }
+      ]
+    },
+    "SuccessData": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "PageDetails": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "properties": {
+        "prev": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        },
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        }
+      }
+    },
+    "Recipient": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "all",
+            "none",
+            "user",
+            "escalation",
+            "schedule",
+            "team",
+            "group"
+          ]
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "TeamRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "team",
+      "description": "Team recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "GroupRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "group",
+      "description": "Group recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "ScheduleRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "schedule",
+      "description": "Schedule recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "EscalationRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "escalation",
+      "description": "Escalation recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "UserRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "user",
+      "description": "User recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "NoRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "none",
+      "description": "No recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        }
+      ]
+    },
+    "AllRecipient": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "all",
+      "description": "All recipient",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Recipient"
+        }
+      ]
+    },
+    "TimeRestrictionInterval": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "weekday-and-time-of-day",
+            "time-of-day"
+          ]
+        }
+      }
+    },
+    "WeekdayTimeRestrictionInterval": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "x-discriminator-value": "weekday-and-time-of-day",
+      "description": "Weekday time restriction interval",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TimeRestrictionInterval"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "restrictions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WeekdayTimeRestriction"
+              },
+              "minItems": 1,
+              "maxItems": 15
+            }
+          }
+        }
+      ]
+    },
+    "TimeOfDayRestrictionInterval": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "x-discriminator-value": "time-of-day",
+      "description": "Time of day restriction interval",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TimeRestrictionInterval"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "restriction": {
+              "$ref": "#/definitions/TimeOfDayRestriction"
+            }
+          }
+        }
+      ]
+    },
+    "WeekdayTimeRestriction": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "properties": {
+        "startDay": {
+          "type": "string",
+          "enum": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ]
+        },
+        "startHour": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startMin": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endDay": {
+          "type": "string",
+          "enum": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ]
+        },
+        "endHour": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endMin": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "TimeOfDayRestriction": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "properties": {
+        "startHour": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startMin": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endHour": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endMin": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Duration": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "required": [
+        "timeAmount"
+      ],
+      "properties": {
+        "timeAmount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "timeUnit": {
+          "type": "string",
+          "enum": [
+            "days",
+            "hours",
+            "minutes",
+            "seconds",
+            "miliseconds",
+            "micros",
+            "nanos"
+          ],
+          "default": "minutes"
+        }
+      }
+    },
+    "Filter": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "description": "Defines the conditions that will be checked before applying rules and type of the operations that will be applied on conditions",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "match-all",
+            "match-any-condition",
+            "match-all-conditions"
+          ]
+        }
+      }
+    },
+    "MatchAll": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "match-all",
+      "description": "Match all filter",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Filter"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "MatchAllConditions": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "match-all-conditions",
+      "description": "Match all conditions filter",
+      "required": [
+        "conditions"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/Filter"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "conditions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Condition"
+              },
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "MatchAnyCondition": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "match-any-condition",
+      "description": "Match any condition filter",
+      "required": [
+        "conditions"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/Filter"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "conditions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Condition"
+              },
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "Condition": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "required": [
+        "field",
+        "operation"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Specifies which alert field will be used in condition. Possible values are message, alias, description, source, entity, tags, actions, extra-properties, recipients, responders or teams",
+          "enum": [
+            "message",
+            "alias",
+            "description",
+            "source",
+            "entity",
+            "tags",
+            "actions",
+            "extra-properties",
+            "recipients",
+            "teams",
+            "priority",
+            "details",
+            "responders"
+          ]
+        },
+        "key": {
+          "type": "string",
+          "description": "If field is set as extra-properties, key could be used for key-value pair"
+        },
+        "not": {
+          "type": "boolean",
+          "description": "Indicates behaviour of the given operation. Default value is false"
+        },
+        "operation": {
+          "type": "string",
+          "enum": [
+            "matches",
+            "contains",
+            "starts-with",
+            "ends-with",
+            "equals",
+            "contains-key",
+            "contains-value",
+            "greater-than",
+            "less-than",
+            "is-empty",
+            "equals-ignore-whitespace"
+          ],
+          "description": "It is the operation that will be executed for the given field and key."
+        },
+        "expectedValue": {
+          "type": "string",
+          "description": "User defined value that will be compared with alert field according to the operation. Default value is empty string"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Order of the condition in conditions list"
+        }
+      }
+    },
+    "Responder": {
+      "x-opsgenie-domain": "common",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "user",
+            "team",
+            "escalation",
+            "schedule"
+          ]
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "UserResponder": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "user",
+      "description": "User responder",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Responder"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "TeamResponder": {
+      "x-opsgenie-domain": "common",
+      "x-discriminator-value": "team",
+      "description": "Team responder",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Responder"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CreateSchedulePayload": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the schedule"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of schedule"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "Timezone of schedule"
+        },
+        "enabled": {
+          "type": "boolean",
+          "nullable": true,
+          "description": "Enable/disable state of schedule"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateScheduleRotationPayload"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "UpdateSchedulePayload": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the schedule"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of schedule"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "Timezone of schedule"
+        },
+        "enabled": {
+          "type": "boolean",
+          "nullable": true,
+          "description": "Enable/disable state of schedule"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateScheduleRotationPayload"
+          }
+        }
+      }
+    },
+    "GetScheduleResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/Schedule"
+            }
+          }
+        }
+      ]
+    },
+    "ListSchedulesResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponseWithExpandable"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Schedule"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CreateScheduleResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleMeta"
+            }
+          }
+        }
+      ]
+    },
+    "GetScheduleTimelineResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponseWithExpandable"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleTimeline"
+            }
+          }
+        }
+      ]
+    },
+    "UpdateScheduleResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleMeta"
+            }
+          }
+        }
+      ]
+    },
+    "Schedule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScheduleRotation"
+          }
+        }
+      }
+    },
+    "ScheduleMeta": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ScheduleTimeline": {
+      "type": "object",
+      "properties": {
+        "_parent": {
+          "$ref": "#/definitions/ScheduleMeta"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finalTimeline": {
+          "$ref": "#/definitions/Timeline"
+        },
+        "baseTimeline": {
+          "$ref": "#/definitions/Timeline"
+        },
+        "overrideTimeline": {
+          "$ref": "#/definitions/Timeline"
+        },
+        "forwardingTimeline": {
+          "$ref": "#/definitions/Timeline"
+        }
+      }
+    },
+    "Timeline": {
+      "type": "object",
+      "properties": {
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimelineRotation"
+          }
+        }
+      }
+    },
+    "TimelineRotation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number",
+          "format": "float",
+          "nullable": true
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimelinePeriod"
+          }
+        }
+      }
+    },
+    "TimelinePeriod": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "type": {
+          "type": "string"
+        },
+        "fromUser": {
+          "description": "Only used by 'forwarding' period types",
+          "type": "string"
+        },
+        "recipient": {
+          "$ref": "#/definitions/TimelineRecipient"
+        },
+        "flattenedRecipients": {
+          "description": "Only used by 'historical' period types",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimelineRecipient"
+          }
+        }
+      }
+    },
+    "TimelineRecipient": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "forwardedFrom": {
+          "description": "Only used by 'historical' period types",
+          "type": "string"
+        }
+      }
+    },
+    "CreateScheduleRotationPayload": {
+      "type": "object",
+      "required": [
+        "startDate",
+        "type",
+        "participants"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of rotation"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Defines a date time as an override start. Minutes may take 0 or 30 as value. Otherwise they will be converted to nearest 0 or 30 automatically"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Defines a date time as an override end. Minutes may take 0 or 30 as value. Otherwise they will be converted to nearest 0 or 30 automatically"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "daily",
+            "weekly",
+            "hourly"
+          ],
+          "description": "Type of rotation. May be one of 'daily', 'weekly' and 'hourly'"
+        },
+        "length": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Length of the rotation with default value 1"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Recipient"
+          },
+          "description": "List of escalations, teams, users or the reserved word none which will be used in schedule. Each of them can be used multiple times and will be rotated in the order they given.",
+          "minItems": 1
+        },
+        "timeRestriction": {
+          "$ref": "#/definitions/TimeRestrictionInterval",
+          "description": "Used to limit schedule rotation to certain day and time of the week, using multiple start and end times for each day of the week."
+        }
+      }
+    },
+    "UpdateScheduleRotationPayload": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of rotation"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Defines a date time as an override start. Minutes may take 0 or 30 as value. Otherwise they will be converted to nearest 0 or 30 automatically"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Defines a date time as an override end. Minutes may take 0 or 30 as value. Otherwise they will be converted to nearest 0 or 30 automatically"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "daily",
+            "weekly",
+            "hourly"
+          ],
+          "description": "Type of rotation. May be one of 'daily', 'weekly' and 'hourly'"
+        },
+        "length": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Length of the rotation with default value 1"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Recipient"
+          },
+          "description": "List of escalations, teams, users or the reserved word none which will be used in schedule. Each of them can be used multiple times and will be rotated in the order they given."
+        },
+        "timeRestriction": {
+          "$ref": "#/definitions/TimeRestrictionInterval",
+          "description": "Used to limit schedule rotation to certain day and time of the week, using multiple start and end times for each day of the week."
+        }
+      }
+    },
+    "GetScheduleRotationResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleRotationWithParent"
+            }
+          }
+        }
+      ]
+    },
+    "ListScheduleRotationsResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ScheduleRotation"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduleRotationWithParent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ScheduleRotation"
+        },
+        {
+          "properties": {
+            "_parent": {
+              "$ref": "#/definitions/ScheduleMeta"
+            }
+          }
+        }
+      ]
+    },
+    "ScheduleRotation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "daily",
+            "weekly",
+            "hourly"
+          ]
+        },
+        "length": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Recipient"
+          }
+        },
+        "timeRestriction": {
+          "$ref": "#/definitions/TimeRestrictionInterval"
+        }
+      }
+    },
+    "CreateScheduleOverridePayload": {
+      "type": "object",
+      "required": [
+        "user",
+        "startDate",
+        "endDate"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "description": "A user defined identifier for the override"
+        },
+        "user": {
+          "$ref": "#/definitions/Recipient",
+          "description": "The user object who will take on call responsibility or reserved word none"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time for override starting"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time for override ending"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScheduleOverrideRotation"
+          },
+          "description": "Identifier (id or name) of rotations that override will apply. When it's set, only specified schedule rotations will be overridden"
+        }
+      }
+    },
+    "UpdateScheduleOverridePayload": {
+      "type": "object",
+      "required": [
+        "user",
+        "startDate",
+        "endDate"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/Recipient",
+          "description": "The user object who will take on call responsibility or reserved word none"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time for override starting"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time for override ending"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScheduleOverrideRotation"
+          },
+          "description": "Identifier (id or name) of rotations that override will apply. When it's set, only specified schedule rotations will be overridden"
+        }
+      }
+    },
+    "CreateScheduleOverrideResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleOverrideMeta"
+            }
+          }
+        }
+      ]
+    },
+    "GetScheduleOverrideResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleOverride"
+            }
+          }
+        }
+      ]
+    },
+    "UpdateScheduleOverrideResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/ScheduleOverrideMeta"
+            }
+          }
+        }
+      ]
+    },
+    "ListScheduleOverrideResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseResponse"
+        },
+        {
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ScheduleOverride"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ScheduleOverride": {
+      "type": "object",
+      "properties": {
+        "_parent": {
+          "$ref": "#/definitions/ScheduleMeta"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/Recipient"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rotations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ScheduleOverrideRotation"
+          }
+        }
+      }
+    },
+    "ScheduleOverrideRotation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ScheduleOverrideMeta": {
+      "type": "object",
+      "properties": {
+        "alias": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

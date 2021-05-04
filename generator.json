@@ -1,0 +1,8 @@
+{
+    "packageName": "opsgenie-rs",
+    "packageVersion": "0.1.0",
+    "library": "reqwest",
+    "hideGenerationTimestamp": false,
+    "supportAsync": false,
+    "enumNameSuffix": "_em"
+  }

@@ -1,36 +1,33 @@
-mod entities;
+#[cfg(test)]
+mod tests {
+    use chrono::{TimeZone, Utc};
+    use chrono::{DateTime, Duration, NaiveDate, NaiveDateTime, NaiveTime, Weekday};
+    use chrono::format::ParseError;
+    use chrono_tz::Europe::Berlin;
+    use chrono_tz::Etc::UTC;
+    use chrono::Datelike;
 
-pub use entities::alert::AlertData as AlertData;
-pub use entities::alert::Alert as Alert;
-pub use entities::alert::Priority as Priority;
+    #[test]
+    fn exploration() {
+        assert_eq!(2 + 2, 4);
 
+        let dt1 = DateTime::parse_from_rfc3339("2021-05-28T08:00:00Z").unwrap();
+        let rfc3339 = DateTime::parse_from_rfc3339("2021-05-24T08:00:00Z").unwrap();
+        let tz_aware = UTC.from_local_datetime(&rfc3339.naive_utc()).unwrap();
+        println!("{}", rfc3339);
+        // let naive_date_time = rfc3339.naive_utc();
+        let berlin_time = tz_aware.with_timezone(&Berlin);
+        println!("{}", berlin_time);
 
+        println!("{}", berlin_time.weekday());
 
-/// OpsGenie API object
-pub struct OpsGenie {
-    /// ops genie API key
-    api_key: String,
-}
-
-impl OpsGenie {
-    /// Return new OpsGenie object
-    ///
-    /// # Arguments
-    ///
-    /// * `key` - ops genie API key
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// use opsgenie_rust::OpsGenie;
-    /// let ops_genie = OpsGenie::new("<API_KEY>");
-    /// ```
-    pub fn new(key: String) -> OpsGenie {
-        OpsGenie {
-            api_key: key.clone(),
+        let mut dt = rfc3339;
+        while dt <= dt1 {
+            if dt.weekday() == Weekday::Mon {
+                println!("Week has started: {:?}", dt);
+            }
+            println!("date: {:?}, day: {:?}", dt, dt.weekday());
+            dt = dt + Duration::days(1);
         }
-    }
-    pub fn alert(&self, alert_data: AlertData) -> Result<Alert, reqwest::Error> {
-        Alert::create(&self.api_key, alert_data)
     }
 }
